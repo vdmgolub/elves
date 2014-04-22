@@ -8,3 +8,5 @@ gem 'resque'
 
 gem 'foreman'
 gem 'thin'
+
+gem 'mocha', group: [:development, :test]
