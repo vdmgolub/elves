@@ -2,6 +2,7 @@ require 'bundler/setup'
 Bundler.require(:default)
 
 require './app'
+require 'rake/testtask'
 require 'resque/tasks'
 
 namespace :resque do
@@ -15,3 +16,9 @@ namespace :resque do
   end
 end
 
+
+Rake::TestTask.new do |t|
+  t.pattern = "spec/*_spec.rb"
+end
+
+task :default => :test
