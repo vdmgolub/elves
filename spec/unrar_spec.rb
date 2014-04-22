@@ -2,18 +2,19 @@ require_relative './spec_helper'
 require_relative '../lib/unrar'
 
 describe Unrar do
+  before do
+    @path = "path/to/archive.rar"
+    @archive = Unrar.new(@path)
+  end
+
   describe ".new" do
     it "sets path to archive" do
-      path = "path/to/archive.rar"
-      archive = Unrar.new(path)
-
-      archive.path.must_equal path
+      @archive.path.must_equal @path
     end
   end
 
   describe "#filenames" do
     before do
-      @archive = Unrar.new("path/to/archive.rar")
       @command = "unrar lb #{@archive.path}"
     end
 
@@ -51,7 +52,6 @@ describe Unrar do
 
   describe "#valid?" do
     before do
-      @archive = Unrar.new("path/to/archive.rar")
       @command = "unrar t #{@archive.path}"
     end
 
@@ -82,6 +82,42 @@ describe Unrar do
 
       it "returns false" do
         @archive.valid?.must_equal false
+      end
+    end
+  end
+
+  describe "#extract" do
+    before do
+      @destination_path = "path/to/extract/"
+      @command = "unrar e #{@archive.path} #{@destination_path}"
+    end
+
+    context "when archive is valid" do
+      before do
+        @archive.expects(:valid?).once.returns(true)
+        @filenames = ["test1.txt", "test2.txt"]
+        @archive.expects(:filenames).once.returns(@filenames)
+        @archive.expects(:`).with(@command).once.returns("All OK")
+      end
+
+      it "returns full paths for extracted files" do
+        result = @filenames.map { |f| "#{@destination_path}#{f}" }
+        @archive.extract(@destination_path).must_equal result
+      end
+    end
+
+    context "when archive is not valid" do
+      before do
+        @archive.expects(:valid?).once.returns(false)
+      end
+
+      it "doesn't call unrar command" do
+        @archive.expects(:`).with(@command).never
+        @archive.extract(@destination_path)
+      end
+
+      it "returns empty list" do
+        @archive.extract(@destination_path).must_equal []
       end
     end
   end

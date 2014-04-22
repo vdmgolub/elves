@@ -16,4 +16,13 @@ class Unrar
   rescue
     []
   end
+
+  def extract(destination_path)
+    if valid?
+      `unrar e #{path} #{destination_path}`
+      filenames.map { |f| "#{destination_path}#{f}" }
+    else
+      []
+    end
+  end
 end
