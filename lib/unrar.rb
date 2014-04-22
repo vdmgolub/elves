@@ -1,7 +1,13 @@
 # Unrar-nonfree is used
 
 class Unrar
-  def self.list(path)
+  attr_reader :path
+
+  def initialize(path)
+    @path = path
+  end
+
+  def filenames
     `unrar lb #{path}`.split("\n")
   rescue
     []
