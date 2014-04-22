@@ -7,6 +7,10 @@ class Unrar
     @path = path
   end
 
+  def valid?
+    !!system("unrar t #{path}")
+  end
+
   def filenames
     `unrar lb #{path}`.split("\n")
   rescue
