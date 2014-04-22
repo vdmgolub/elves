@@ -9,4 +9,7 @@ gem 'resque'
 gem 'foreman'
 gem 'thin'
 
-gem 'mocha', group: [:development, :test]
+group :development, :test do
+  gem 'mocha'
+  gem 'fakefs', require: 'fakefs/safe'
+end
