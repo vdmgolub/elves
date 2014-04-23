@@ -89,7 +89,7 @@ describe Unrar do
   describe "#extract" do
     before do
       @destination_path = "path/to/extract/"
-      @command = "unrar e #{@archive.path} #{@destination_path}"
+      @command = "unrar e -o- #{@archive.path} #{@destination_path}"
     end
 
     context "when archive is valid" do

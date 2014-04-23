@@ -19,7 +19,7 @@ class Unrar
 
   def extract(destination_path)
     if valid?
-      `unrar e #{path} #{destination_path}`
+      `unrar e -o- #{path} #{destination_path}`
       filenames.map { |f| "#{destination_path}#{f}" }
     else
       []
