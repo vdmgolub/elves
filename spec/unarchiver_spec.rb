@@ -15,18 +15,21 @@ module MiniTest
 end
 
 describe Unarchiver do
+  before do
+    FakeFS.activate!
+  end
+
+  after do
+    FakeFS.deactivate!
+  end
+
   describe ".search" do
     before do
-      FakeFS.activate!
       @path = File.expand_path('/tmp')
       FileUtils.mkdir_p(@path)
 
       @archives = ["#{@path}/archive1.rar", "#{@path}/archive2.rar"]
       @archives.each { |a| FileUtils.touch(a) }
-    end
-
-    after do
-      FakeFS.deactivate!
     end
 
     context "when directory has archives" do
@@ -57,6 +60,27 @@ describe Unarchiver do
       it "returns empty list" do
         Unarchiver.search("#{@path}/not_existing_dir").must_equal []
       end
+    end
+  end
+
+  describe ".extract" do
+    before do
+      @archive_path = "path/to/archive.rar"
+      @destination_path = "/tmp"
+      FileUtils.mkdir_p(@destination_path)
+
+      @archived_files = ["file1.txt", "file2.txt"]
+      @extracted_files = @archived_files.map { |f| "#{@destination_path}/#{f}" }
+    end
+
+    it "extracts files to given path" do
+      Unrar.any_instance.expects(:extract).with(@destination_path).once.returns(@extracted_files)
+      Unarchiver.extract(@archive_path, @destination_path)
+    end
+
+    it "returns full paths of extracted files" do
+      Unrar.any_instance.expects(:extract).with(@destination_path).once.returns(@extracted_files)
+      Unarchiver.extract(@archive_path, @destination_path).must_equal @extracted_files
     end
   end
 end
