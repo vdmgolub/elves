@@ -18,7 +18,7 @@ end
 
 
 Rake::TestTask.new do |t|
-  t.pattern = "spec/*_spec.rb"
+  t.pattern = "spec/**/*_spec.rb"
 end
 
 task :default => :test
