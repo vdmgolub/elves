@@ -12,4 +12,5 @@ gem 'thin'
 group :development, :test do
   gem 'mocha'
   gem 'fakefs', require: 'fakefs/safe'
+  gem 'rack-test', require: 'rack/test'
 end
