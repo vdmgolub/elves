@@ -12,7 +12,7 @@ namespace :resque do
     ENV['QUEUE'] = '*'
 
     Resque.redis = 'localhost:6379'
-    Resque.redis.namespace = "elves"
+    Resque.redis.namespace = "resque:elves"
   end
 end
 

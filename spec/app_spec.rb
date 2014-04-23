@@ -11,9 +11,12 @@ end
 describe "POST /extract" do
   context "when path is provided" do
     before do
-      @path = "/path/to/archive"
-      Resque.expects(:enqueue).with(ExtractJob, @path).once
-      post '/extract', path: @path
+      path = "/path/to/archive"
+      destination_path = "/path/to/extract"
+
+      app.any_instance.expects(:destination_path).once.returns(destination_path)
+      Resque.expects(:enqueue).with(ExtractJob, path, destination_path).once
+      post '/extract', path: path
     end
 
     it "returns 200" do
