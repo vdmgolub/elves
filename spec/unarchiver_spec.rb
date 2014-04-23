@@ -83,4 +83,40 @@ describe Unarchiver do
       Unarchiver.extract(@archive_path, @destination_path).must_equal @extracted_files
     end
   end
+
+  describe ".extract_from_path" do
+    before do
+      @archive_path = "path/to/archives"
+      FileUtils.mkdir_p(@archive_path)
+
+      @destination_path = "/tmp"
+      FileUtils.mkdir_p(@destination_path)
+
+      @archives = { "archive1.rar" => ["#{@destination_path}/file1.txt", "#{@destination_path}/file2.txt"],
+                    "archive2.rar" => ["#{@destination_path}/file3.txt", "#{@destination_path}/file4.txt"] }
+
+      @archives.keys.each { |a| FileUtils.touch("#{@archive_path}/#{a}") }
+
+
+      @extracted_files = @archives.values.flatten
+    end
+
+    it "extracts all found archives" do
+      @archives.each do |archive, files|
+        Unrar.any_instance.expects(:extract).with(@destination_path).once.returns()
+      end
+
+      Unarchiver.extract_from_path(@archive_path, @destination_path)
+    end
+
+    it "returns list of extracted files" do
+      @archives.each do |archive, files|
+        Unrar.any_instance.expects(:extract).with(@destination_path).once.returns(files)
+      end
+
+      Unarchiver.extract_from_path(@archive_path, @destination_path).each do |f|
+        @extracted_files.must_include f
+      end
+    end
+  end
 end

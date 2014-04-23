@@ -10,4 +10,10 @@ class Unarchiver
 
     archive.extract(destination_path)
   end
+
+  def self.extract_from_path(path, destination_path)
+    archives = search(path)
+
+    archives.map { |a| extract(a, destination_path) }.flatten
+  end
 end
