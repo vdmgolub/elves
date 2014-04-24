@@ -9,6 +9,8 @@ gem 'resque'
 gem 'foreman'
 gem 'thin'
 
+gem 'feedjira'
+
 group :development, :test do
   gem 'mocha'
   gem 'fakefs', require: 'fakefs/safe'
