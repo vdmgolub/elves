@@ -3,7 +3,9 @@ require_relative '../lib/feed_fetcher'
 
 describe FeedFetcher do
   before do
-    @url = "http://example.com/rss"
+    path = File.join(File.dirname(File.expand_path(__FILE__, Dir.getwd)), "fixtures", "example.rss")
+    @url = "file://#{URI.escape(path)}"
+
     @fetcher = FeedFetcher.new(@url)
   end
 
@@ -14,10 +16,15 @@ describe FeedFetcher do
   end
 
   describe "#fetch" do
-    it "calls Feedjira for help" do
-      Feedjira::Feed.expects(:fetch_and_parse).with(@fetcher.source)
+    it "returns entries list" do
+      @fetcher.fetch.length.must_equal 2
+    end
 
-      @fetcher.fetch
+    context "when URL is incorrect" do
+      it "returns empty list" do
+        fetcher = FeedFetcher.new("file://incorrect/path/to/feed")
+        fetcher.fetch.must_equal []
+      end
     end
   end
 end

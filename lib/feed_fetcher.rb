@@ -8,6 +8,8 @@ class FeedFetcher
   end
 
   def fetch
-    Feedjira::Feed.fetch_and_parse(source)
+    feed = Feedjira::Feed.fetch_and_parse(source)
+
+    feed.respond_to?(:entries) ? feed.entries : []
   end
 end
