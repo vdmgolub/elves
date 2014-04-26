@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'resque'
-require_relative './lib/jobs/extract_job'
+require_relative './lib/jobs/archive_extraction_job'
 require 'yaml'
 
 Resque.redis.namespace = "resque:elves"
@@ -26,7 +26,7 @@ post '/extract' do
   path = params[:path]
 
   if path
-    Resque.enqueue(ExtractJob, path, destination_path)
+    Resque.enqueue(ArchiveExtractionJob, path, destination_path)
 
     "Job added"
   else

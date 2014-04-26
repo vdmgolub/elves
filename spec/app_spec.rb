@@ -15,7 +15,7 @@ describe "POST /extract" do
       destination_path = "/path/to/extract"
 
       app.any_instance.expects(:destination_path).once.returns(destination_path)
-      Resque.expects(:enqueue).with(ExtractJob, path, destination_path).once
+      Resque.expects(:enqueue).with(ArchiveExtractionJob, path, destination_path).once
       post '/extract', path: path
     end
 

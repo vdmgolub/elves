@@ -1,6 +1,6 @@
 require_relative '../unarchiver'
 
-class ExtractJob
+class ArchiveExtractionJob
   @queue = :default
 
   def self.perform(path, destination_path)
