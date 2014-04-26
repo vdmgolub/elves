@@ -1,0 +1,3 @@
+class DownloadJob
+
+end
