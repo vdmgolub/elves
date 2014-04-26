@@ -1,0 +1,4 @@
+resource_name:
+  url: http://resource_url.com/rss_feed
+  keywords:
+    - keywords for filter
