@@ -1,7 +1,11 @@
 class KeywordsMatcher
   def self.match?(phrase, keywords)
-    regex = build_regex(keywords)
-    !!regex.match(phrase)
+    if keywords && keywords.length > 0
+      regex = build_regex(keywords)
+      return !!regex.match(phrase)
+    end
+
+    true
   end
 
   private

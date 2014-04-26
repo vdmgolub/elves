@@ -64,5 +64,19 @@ describe KeywordsMatcher do
         end
       end
     end
+
+    context "when keywords list is empty" do
+      it "returns true" do
+        keywords = []
+
+        KeywordsMatcher.match?("one two three", keywords).must_equal true
+      end
+    end
+
+    context "when keywords are nil" do
+      it "returns true" do
+        KeywordsMatcher.match?("one two three", nil).must_equal true
+      end
+    end
   end
 end
