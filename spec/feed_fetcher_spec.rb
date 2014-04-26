@@ -3,7 +3,7 @@ require_relative '../lib/feed_fetcher'
 
 describe FeedFetcher do
   before do
-    path = File.join(File.dirname(File.expand_path(__FILE__, Dir.getwd)), "fixtures", "example.rss")
+    path = File.expand_path File.join(File.dirname(__FILE__), "fixtures", "example.rss")
     @url = "file://#{URI.escape(path)}"
 
     @fetcher = FeedFetcher.new(@url)
