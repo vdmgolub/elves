@@ -1,7 +1,7 @@
 require 'mechanize'
 
 class Downloader
-  attr_reader :prefix, :ext, :destination
+  attr_accessor :prefix, :ext, :destination
 
   def initialize(options = {})
     @prefix = options["prefix"] || options[:prefix]
@@ -25,15 +25,16 @@ class Downloader
   end
 
   def get_filename(title, url)
-    if ext
-      title = title.downcase.gsub(" ", ".")
-      pref = prefix ? "#{prefix}." : ""
+    filename = if title && ext
+                 title = title.downcase.gsub(" ", ".")
 
-      "#{pref}#{title}.#{ext}"
-    else
-      file = agent.head(url)
-      file.filename
-    end
+                 "#{title}.#{ext}"
+               else
+                 file = agent.head(url)
+                 file.filename
+               end
+
+    prefix ? "#{prefix}.#{filename}" : filename
   end
 
   def download(filename, url)

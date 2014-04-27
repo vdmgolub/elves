@@ -78,7 +78,7 @@ describe Downloader do
 
       context "when prefix is not set" do
         before do
-          @downloader.expects(:prefix).returns(nil)
+          @downloader.prefix = nil
         end
 
         it "saves downloaded file without prefix" do
@@ -89,15 +89,39 @@ describe Downloader do
       end
     end
 
-    context "when extension is not set" do
-      before do
-        @downloader.expects(:ext).returns(nil)
+    context "when title is not set" do
+      it "saves downloaded file with prefixed original name" do
+        name = "#{@downloader.prefix}.#{File.basename(@url)}"
+        full_path = File.join(@downloader.destination, name)
+
+        @downloader.run(nil, @url)
+        File.exists?(full_path).must_equal true
       end
 
-      it "saves downloaded file with original name" do
+      context "when prefix is not set" do
+        before do
+          @downloader.prefix = nil
+        end
+
+        it "saves downloaded file with original name" do
+          full_path = File.join(@downloader.destination, File.basename(@url))
+
+          @downloader.run(nil, @url)
+          File.exists?(full_path).must_equal true
+        end
+      end
+    end
+
+    context "when extension is not set" do
+      before do
+        @downloader.ext = nil
+      end
+
+      it "saves downloaded file with prefixed original name" do
         @downloader.run(@title, @url)
 
-        full_path = File.join(@downloader.destination, File.basename(@url))
+        name = "#{@downloader.prefix}.#{File.basename(@url)}"
+        full_path = File.join(@downloader.destination, name)
         File.exists?(full_path).must_equal true
       end
     end
