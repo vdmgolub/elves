@@ -1,18 +1,6 @@
 require_relative './spec_helper'
 require_relative '../lib/unarchiver'
-require 'fakefs/safe'
-
-module MiniTest
-  module Assertions
-    alias :actual_diff :diff
-
-    def diff exp, act
-      FakeFS.without do
-        actual_diff exp, act
-      end
-    end
-  end
-end
+require_relative './fakefs_helper'
 
 describe Unarchiver do
   before do
