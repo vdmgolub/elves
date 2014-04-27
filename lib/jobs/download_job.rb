@@ -1,4 +1,5 @@
 require_relative '../../initializers/feeds'
+require_relative '../downloader'
 
 class DownloadJob
   @queue = :default
