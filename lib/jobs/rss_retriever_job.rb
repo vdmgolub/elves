@@ -5,6 +5,8 @@ require_relative '../feed_fetcher'
 require_relative '../rss_entries_filter'
 
 class RssRetrieverJob
+  @queue = :default
+
   def self.perform
     list = {}
 

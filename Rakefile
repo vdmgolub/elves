@@ -10,6 +10,7 @@ namespace :resque do
   task :setup do
     require 'resque'
     require 'resque-scheduler'
+    Dir[File.join(File.dirname(__FILE__), 'lib', 'jobs', '*.rb')].each { |file| require file }
 
     ENV['QUEUE'] = '*'
 

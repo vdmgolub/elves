@@ -1,6 +1,8 @@
 require_relative '../../initializers/feeds'
 
 class DownloadJob
+  @queue = :default
+
   def self.perform(list)
     config = Feeds.config
 
