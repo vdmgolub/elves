@@ -11,7 +11,7 @@ class DownloadJob
       if config[feed_name]
         downloader = Downloader.new(config[feed_name])
 
-        urls.each { |url| downloader.run(url[:title], url[:url]) }
+        urls.each { |url| downloader.run(url["title"], url["url"]) }
       end
     end
   end
