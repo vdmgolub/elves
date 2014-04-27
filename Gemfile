@@ -5,6 +5,7 @@ ruby '2.1.1'
 gem 'rake'
 gem 'sinatra'
 gem 'resque'
+gem 'resque-scheduler'
 
 gem 'foreman'
 gem 'thin'
