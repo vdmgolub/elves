@@ -1,0 +1,4 @@
+RssRetrieverJob:
+  every: "3h"
+  queue: default
+  description: "Checks RSS for files to download"
