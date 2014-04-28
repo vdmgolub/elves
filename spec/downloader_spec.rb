@@ -7,9 +7,9 @@ describe Downloader do
   describe "#prefix" do
     it "returns prefix value" do
       [:prefix, "prefix"].each do |key|
-        config = { key => "[f1]" }
+        config = { key => "f1" }
         downloader = Downloader.new(config)
-        downloader.prefix.must_equal config[key]
+        downloader.prefix.must_equal "[#{config[key]}]"
       end
     end
   end
@@ -38,7 +38,7 @@ describe Downloader do
     before do
       FakeFS.activate!
 
-      config = { prefix: "[f1]", ext: "md", destination: "/tmp/destination" }
+      config = { prefix: "f1", ext: "md", destination: "/tmp/destination" }
       @downloader = Downloader.new(config)
 
       @title = "Item 1"

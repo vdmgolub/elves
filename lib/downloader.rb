@@ -3,6 +3,10 @@ require 'mechanize'
 class Downloader
   attr_accessor :prefix, :ext, :destination
 
+  def prefix
+    "[#{@prefix}]" if @prefix
+  end
+
   def initialize(options = {})
     @prefix = options["prefix"] || options[:prefix]
     @ext = options["ext"] || options[:ext]

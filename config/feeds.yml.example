@@ -1,6 +1,6 @@
 resource_name:
   url: http://resource_url.com/rss_feed
-  prefix: [resource_prefix]
+  prefix: resource_prefix
   ext: rar
   destination: path/to/download
   keywords:
